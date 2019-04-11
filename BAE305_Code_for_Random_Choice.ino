@@ -1,18 +1,20 @@
-char *ReplyArray[12] = {
-  "It is certain.", "It is decidedly so.", "Withough a doubt.", "Most likely.", "Outlook good.", "Yes.","Reply hazy, try again.", "Ask again later.", "Cannot predict now.", "Don't count on it.", "My reply is no.", "Very doubtful"
-};                      // these are all the replies it should be able to give
+char *ReplyArray[13] = {
+  "It is certain.", "It is decidedly so.", "Withough a doubt.", "Most likely.", "Outlook good.", "Yes.","Reply hazy, try again.", "Ask again later.", "Cannot predict now.", "Don't count on it.", "My reply is no.", "Very doubtful", "Ask Dr. Dvorak"
+};                      //the array of possible replies
+const int ACC = A1;     //the accelerometer is connected to pin A1
+float threshold = 700;  //threshold the sensor must surpass to activate reply
 
-char *ReplyChoice = ReplyArray[random(12)];
-                        // just assigning "ReplyChoice" variable to be a random choice from the list in the array
 void setup() {
-  Serial.begin(9600);   // i still don't fully understand what this means
+  Serial.begin(9600);
 }
 
-void loop() {           // eventually we'll add that it prints when the accelerometer is pushed past threshold
-                        // i just focused on the random bit right now because i'm stupid
-                        
-Serial.println (*ReplyChoice);
-delay (2000);           // delay won't stay because it'll be activated by shaking, not time. i was just trying to see if it works
-}                       // it kind of doesn't? i keep getting the error "Serial port not selected." but the port option is grayed out
-                        // it verifies fine. i think this code would work
-                        // does it work for you guys?
+void loop() {
+
+float sensorValueAccelerometer = analogRead(A1); //naming a variable for what the sensor is reading
+Serial.println (sensorValueAccelerometer);       //printing what the sensor is reading
+String Reply = ReplyArray[random(12)];           //assigning "Reply" variable to be random choice from array
+if (sensorValueAccelerometer > threshold){
+  Serial.println (Reply);                        //printing "Reply" if sensor reads beyond threshold
+}
+delay (1000);                                    //delay for testing
+}
