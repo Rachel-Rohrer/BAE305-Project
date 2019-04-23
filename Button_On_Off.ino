@@ -1,36 +1,37 @@
-const int buttonPin = 1;     // pushbutton connected to pin 1
-const int ledPin =  13;      // LED connected to pin 13
+const int buttonPin = 1;      // button connected to pin 1
+const int displayScreen = 13; // display connected to pin 13
 
-int button;
-int oldbutton = 0;
-int buttonpin = 2;
+int button;                   // the button is variable
+int oldButton = 0;            // the button's initial state is zero
 int state = 0;
 
 void setup(){
  pinMode(buttonPin, INPUT);
- pinMode(ledPin, OUTPUT);
+ pinMode(displayScreen, OUTPUT);
 }
 void loop()
 {
- digitalRead(buttonpin);
- if(button && !oldbutton) // same as if(button == high && oldbutton == low)
- {
-   //we have a new button press
-   if(state == 0) // if the state is off, turn it on
+ digitalRead(buttonPin);
+ if(button && !oldButton)      // same as if(button == high && oldbutton == low)
+ {                             // ^comment from forum I got the code from. think it means
+                                   // the button used to be inactive and is now active
+                                   // so the button was pushed
+   if(state == 0)              // if the state was "off"
    {
-     //do stuff
-     state = 1;
+     digitalWrite (13, HIGH);  // sends voltage to the screen
+     state = 1;                // turns the state "on"
    }
-   else // if the state is on, turn it off
+   else                        // if the state was "on"
    {
-     //do stuff
-     state = 0;
+     digitalWrite (13, LOW);   // sends no voltage to the screen
+     state = 0;                // turns the state "off"
    }
-   oldbutton = 1;
+   oldButton = 1;              // changes button's state from 0 to 1. becomes the "old" state
  }
- else if(!button && oldbutton) // same as if(button == low && oldbutton == high)
- {
-   // the button was released
-   oldbutton = 0;
+ else if(!button && oldButton) // same as if(button == low && oldbutton == high)
+ {                             // ^from forum. based on the if statement, think it means
+                                   // the button used to be active and is now inactive
+                                   // so the button was released
+   oldButton = 0;              // returns the button state to its initial state
  }
 }
